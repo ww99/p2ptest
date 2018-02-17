@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wolfcode.p2p.base.mapper.EmployeeMapper" >
+  <resultMap id="BaseResultMap" type="cn.wolfcode.p2p.base.domain.Employee" >
+    <id column="id" property="id" />
+    <result column="userName" property="userName" />
+    <result column="age" property="age" />
+    <result column="hireDate" property="hireDate" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from `Employee`
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="cn.wolfcode.p2p.base.domain.Employee" useGeneratedKeys="true" keyProperty="id" >
+    insert into `Employee` (userName, age, hireDate)
+    values (#{userName}, #{age}, #{hireDate})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.wolfcode.p2p.base.domain.Employee" >
+    update `Employee`
+    set userName = #{userName},
+      age = #{age},
+      hireDate = #{hireDate}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, userName, age, hireDate
+    from `Employee`
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, userName, age, hireDate
+    from `Employee`
+  </select>
+  <select id="queryForCount" resultType="long">
+    select count(id) from employee
+    <include refid="whereClause"/>
+  </select>
+  <select id="queryForList" resultMap="BaseResultMap">
+    select id,userName,age,hireDate from employee
+    <include refid="whereClause"/>
+    limit #{start},#{rows}
+  </select>
+  <sql id="whereClause">
+    <where>
+    </where>
+  </sql>
+</mapper>
