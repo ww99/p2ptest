@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter@Setter
 public class AjaxResult {
     private String msg;
-    private boolean success=false;
+    private boolean success=true;
 
     public AjaxResult(String msg){
         this.msg = msg;
