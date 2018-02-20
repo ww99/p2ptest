@@ -1,4 +1,4 @@
-package cn.wolfcode.p2p.controller;
+package cn.wolfcode.p2p.mgrsite.controller;
 
 import cn.wolfcode.p2p.base.domain.Employee;
 import cn.wolfcode.p2p.base.qo.EmployeeQueryObject;

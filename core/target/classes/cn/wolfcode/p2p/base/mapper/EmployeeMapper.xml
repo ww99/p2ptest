@@ -38,7 +38,7 @@
   <select id="queryForList" resultMap="BaseResultMap">
     select id,userName,age,hireDate from employee
     <include refid="whereClause"/>
-    limit #{start},#{rows}
+    limit #{start},#{pageSize}
   </select>
   <sql id="whereClause">
     <where>

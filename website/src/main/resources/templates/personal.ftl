@@ -34,7 +34,7 @@
 									<img class="icon" src="/images/ms.png" />
 								</div>
 								<div class="pull-left el-head">
-									<p>用户名：</p>
+									<p>用户名:${logininfo.username}</p>
 									<p>最后登录时间：2017-08-25 15:30:10</p>
 								</div>
 								<div class="pull-left" style="text-align: center;width: 400px;margin:30px auto 0px auto;">
@@ -46,25 +46,25 @@
 							
 							<div class="row h4 account-info">
 								<div class="col-sm-4">
-									账户总额：<span class="text-primary">元</span>
+									账户总额：<span class="text-primary">${account.totalAmount?string('0.00')}元</span>
 								</div>
 								<div class="col-sm-4">
-									可用金额：<span class="text-primary">元</span>	
+									可用金额：<span class="text-primary">${account.usableAmount?string('0.00')}元</span>
 								</div>
 								<div class="col-sm-4">
-									冻结金额：<span class="text-primary">元</span>
+									冻结金额：<span class="text-primary">${account.freezedAmount?string('0.00')}元</span>
 								</div>
 							</div>
 							
 							<div class="row h4 account-info">
 								<div class="col-sm-4">
-									待收利息：<span class="text-primary">元</span>
+									待收利息：<span class="text-primary">${account.unReceiveInterest?string('0.00')}元</span>
 								</div>
 								<div class="col-sm-4">
-									待收本金：<span class="text-primary">元</span>	
+									待收本金：<span class="text-primary">${account.unReceivePrincipal?string('0.00')}元</span>
 								</div>
 								<div class="col-sm-4">
-									待还本息：<span class="text-primary">元</span>
+									待还本息：<span class="text-primary">${account.unReturnAmount?string('0.00')}元</span>
 								</div>
 							</div>
 							

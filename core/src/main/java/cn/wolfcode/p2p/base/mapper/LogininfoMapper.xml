@@ -13,9 +13,12 @@
     values (#{username}, #{password}, #{state},#{userType})
   </insert>
   <select id="selectUser" resultMap="BaseResultMap">
-  select username, password, state,userType from logininfo where username = #{username} and password = #{password} and userType = #{userType}
+  select id,username, password, state,userType from logininfo where username = #{username} and password = #{password} and userType = #{userType}
   </select>
   <select id="selectCountByName" resultType="int">
   select count(id) from logininfo where username = #{username}
+  </select>
+  <select id="queryCountByUserType" resultType="int">
+  select count(id) from logininfo where userType = #{userType}
   </select>
 </mapper>

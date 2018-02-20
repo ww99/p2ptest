@@ -8,10 +8,10 @@ import lombok.Setter;
  */
 @Getter@Setter
 public class QueryObject {
-    private int page=1;
-    private int rows=10;
+    private int currentPage=1;
+    private int pageSize=10;
 
     public int getStart(){
-        return (this.page - 1) * rows;
+        return (currentPage - 1) * pageSize;
     }
 }

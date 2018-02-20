@@ -25,4 +25,11 @@
     select id, sn, title
     from `SystemDictionary`
   </select>
+  <select id="queryForCount" resultType="long">
+  select count(id) from systemDictionary
+  </select>
+  <select id="queryForList" resultMap="BaseResultMap">
+  select * from systemDictionary
+  limit #{start},#{pageSize}
+  </select>
 </mapper>

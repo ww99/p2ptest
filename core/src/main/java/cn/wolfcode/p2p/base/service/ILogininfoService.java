@@ -11,4 +11,6 @@ public interface ILogininfoService {
     Logininfo login(String username,String password,int userType);
 
     Logininfo register(String username, String password);
+
+    void initAdmin();
 }

@@ -1,21 +1,27 @@
 package cn.wolfcode.p2p.base.service.impl;
 
 import cn.wolfcode.p2p.base.domain.Account;
+import cn.wolfcode.p2p.base.domain.IpLog;
 import cn.wolfcode.p2p.base.domain.Logininfo;
 import cn.wolfcode.p2p.base.domain.Userinfo;
 import cn.wolfcode.p2p.base.mapper.LogininfoMapper;
 import cn.wolfcode.p2p.base.service.IAccountService;
+import cn.wolfcode.p2p.base.service.IIpLogService;
 import cn.wolfcode.p2p.base.service.ILogininfoService;
 import cn.wolfcode.p2p.base.service.IUserinfoService;
+import cn.wolfcode.p2p.base.util.BidConst;
 import cn.wolfcode.p2p.base.util.MD5;
 import cn.wolfcode.p2p.base.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
 
 /**
  * Created by 123 on 2018/2/18.
  */
-@Service
+@Service@Transactional
 public class LogininfoServiceImpl implements ILogininfoService{
 
     @Autowired
@@ -24,6 +30,8 @@ public class LogininfoServiceImpl implements ILogininfoService{
     private IAccountService accountService;
     @Autowired
     private IUserinfoService userinfoService;
+    @Autowired
+    private IIpLogService ipLogService;
     @Override
     public int save(Logininfo logininfo) {
         return logininfoMapper.insert(logininfo);
@@ -32,13 +40,19 @@ public class LogininfoServiceImpl implements ILogininfoService{
     @Override
     public Logininfo login(String username, String password, int userType) {
         Logininfo logininfo = logininfoMapper.selectUser(username, MD5.encode(password),userType);
+        IpLog iplog = new IpLog();
+        iplog.setUsername(username);
+        iplog.setLoginTime(new Date());
+        iplog.setIp(UserContext.getIp());
         if (logininfo != null){
             //存在改用户,存入session
+            iplog.setState(IpLog.LOGIN_SUCCESS);
             UserContext.setCurrent(logininfo);
         }else {
             //不存在该用户.抛出异常
-            throw new RuntimeException("该用户不存在");
+            iplog.setState(IpLog.LOGIN_FAILED);
         }
+        ipLogService.save(iplog);
         return logininfo;
     }
 
@@ -66,5 +80,20 @@ public class LogininfoServiceImpl implements ILogininfoService{
         userinfoService.save(userinfo);
 
         return logininfo;
+    }
+
+    @Override
+    public void initAdmin() {
+        //根基类型去数据库中查找是否有管理员
+        int count = logininfoMapper.queryCountByUserType(Logininfo.USERTYPE_MANAGER);
+        //如果没有,创建一个管理员
+        if (count == 0){
+            Logininfo logininfo = new Logininfo();
+            logininfo.setState(Logininfo.STATE_NORMAL);
+            logininfo.setUsername(BidConst.ADMIN_ACCOUNT);
+            logininfo.setUserType(Logininfo.USERTYPE_MANAGER);
+            logininfo.setPassword(MD5.encode(BidConst.ADMIN_PASSWORD));
+            logininfoMapper.insert(logininfo);
+        }
     }
 }

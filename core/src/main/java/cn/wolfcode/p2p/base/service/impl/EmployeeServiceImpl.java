@@ -7,6 +7,7 @@ import cn.wolfcode.p2p.base.service.IEmployeeService;
 import cn.wolfcode.p2p.base.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 /**
  * Created by 123 on 2018/2/10.
  */
-@Service
+@Service@Transactional
 public class EmployeeServiceImpl implements IEmployeeService{
 
     @Autowired

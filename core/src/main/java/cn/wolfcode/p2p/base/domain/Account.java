@@ -16,4 +16,8 @@ public class Account extends BaseDomain{
     private BigDecimal unReturnAmount = BidConst.ZERO;//账户待还金额
     private BigDecimal remainBorrowLimit = BidConst.INIT_BORROW_LIMIT;//账户剩余授信额度
     private BigDecimal borrowLimit = BidConst.INIT_BORROW_LIMIT;//账户授信额度
+
+    public BigDecimal getTotalAmount(){
+        return this.usableAmount.add(this.freezedAmount).add(this.unReceivePrincipal);
+    }
 }

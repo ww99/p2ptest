@@ -15,7 +15,7 @@
 			<li name="realAuth"><a href="/realAuth.do">实名认证</a></li>
 			<li name="userFile"><a href="/userFile.do">风控资料认证</a></li>
 			<li name="bankInfo"><a href="/bankInfo.do">银行卡管理</a></li>
-			<li name="ipLog"><a href="/ipLog.do">登录记录</a></li>
+			<li name="ipLog"><a href="/ipLog">登录记录</a></li>
 			<li name="userInfo"><a href="/basicInfo.do"> <span>个人资料</span></a></li>
 		</ul>
 	</li>

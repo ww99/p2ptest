@@ -5,11 +5,12 @@ import cn.wolfcode.p2p.base.mapper.UserinfoMapper;
 import cn.wolfcode.p2p.base.service.IUserinfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by 123 on 2018/2/18.
  */
-@Service
+@Service@Transactional
 public class UserinfoServiceImpl implements IUserinfoService{
     @Autowired
     private UserinfoMapper userinfoMapper;

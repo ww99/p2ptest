@@ -1,6 +1,7 @@
 package cn.wolfcode.p2p.base.mapper;
 
 import cn.wolfcode.p2p.base.domain.SystemDictionary;
+import cn.wolfcode.p2p.base.qo.SystemDictionaryQueryObject;
 
 import java.util.List;
 
@@ -12,4 +13,8 @@ public interface SystemDictionaryMapper {
     List<SystemDictionary> selectAll();
 
     int updateByPrimaryKey(SystemDictionary systemDictionary);
+
+    Long queryForCount();
+
+    List<SystemDictionary> queryForList(SystemDictionaryQueryObject qo);
 }

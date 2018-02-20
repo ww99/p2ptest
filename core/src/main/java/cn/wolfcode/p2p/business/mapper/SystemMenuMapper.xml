@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.wolfcode.p2p.business.mapper.SystemMenuMapper" >
+  <resultMap id="BaseResultMap" type="cn.wolfcode.p2p.business.domain.SystemMenu" >
+    <id column="id" property="id" />
+    <result column="text" property="text" />
+    <result column="iconCls" property="iconCls" />
+    <result column="url" property="url" />
+    <result column="parent_id" property="parent_id" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from `SystemMenu`
+    where id = #{id}
+  </delete>
+  <insert id="insert" parameterType="cn.wolfcode.p2p.business.domain.SystemMenu" useGeneratedKeys="true" keyProperty="id" >
+    insert into `SystemMenu` (text, iconCls, url, parent_id)
+    values (#{text}, #{iconCls}, #{url}, #{parent_id})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="cn.wolfcode.p2p.business.domain.SystemMenu" >
+    update `SystemMenu`
+    set text = #{text},
+      iconCls = #{iconCls},
+      url = #{url},
+      parent_id = #{parent_id}
+    where id = #{id}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select id, text, iconCls, url, parent_id
+    from `SystemMenu`
+    where id = #{id}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, text, iconCls, url, parent_id
+    from `SystemMenu`
+  </select>
+  <sql id="base_where">
+    <where>
+      <if test="parent_idId != null">
+      and parent_id_id = #{parentId}
+      </if>
+    </where>
+  </sql>
+  <select id="queryPageCount" resultType="int">
+  select count(id) from systemmenu
+  <include refid="base_where"/>
+  </select>
+  <select id="queryPageDataResult" resultMap="BaseResultMap">
+  select * from systemmenu
+  <include refid="base_where"/>
+    limit #{start},#{pageSize}
+  </select>
+</mapper>

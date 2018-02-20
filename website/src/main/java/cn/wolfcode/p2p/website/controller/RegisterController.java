@@ -1,4 +1,4 @@
-package cn.wolfcode.p2p.controller;
+package cn.wolfcode.p2p.website.controller;
 
 import cn.wolfcode.p2p.base.domain.Logininfo;
 import cn.wolfcode.p2p.base.service.ILogininfoService;
@@ -21,9 +21,9 @@ public class RegisterController {
         AjaxResult result = null;
         Logininfo logininfo = logininfoService.login(username,password,Logininfo.USERTYPE_USER);
         if (logininfo == null){
-            result = new AjaxResult("密码输入有误");
+            result = new AjaxResult("密码输入有误",false);
         }else {
-            result = new AjaxResult("登录成功",true);
+            result = new AjaxResult("登录成功");
         }
         return result;
     }
