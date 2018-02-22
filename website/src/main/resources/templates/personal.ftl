@@ -9,7 +9,51 @@
 		<link type="text/css" rel="stylesheet" href="/css/account.css" />
 		
 		<script type="text/javascript">
-			
+			$(function(){
+				$("#showBindPhoneModal").click(function(form){
+                    $("#bindPhoneModal").modal("show");
+				});
+				$("#sendVerifyCode").click(function(){
+					var thisObj = $(this);
+					thisObj.prop('disable',true);
+					$.ajax({
+						url:'/sendVerifyCode',
+						data:{phoneNumber:$("#phoneNumber").val()},
+						dataType:"json",
+						success:function(data){
+							$.messager.popup(data.msg);
+							if(data.success){
+								var count = 5;
+								var timer = window.setInterval(function(){
+									count--;
+									if (count>0){
+										thisObj.text(count+"s后重新发送");
+									}else{
+										//消除定时器
+										window.clearInterval(timer);
+										thisObj.prop('disable',false);
+										thisObj.text('发送短信验证码');
+									}
+								},1000);
+							}else{
+								thisObj.prop('disable',false);
+							}
+						}
+					});
+				});
+				$("#bindPhone").click(function(){
+					$("#bindPhoneForm").ajaxSubmit({
+						dataType:'json',
+						success:function(data){
+							if (data.success){
+								window.location.reload();
+							}else {
+								$.messager.popup(data.msg);
+							}
+						}
+					});
+				});
+			})
 		</script>
 	</head>
 	<body>
@@ -93,12 +137,17 @@
 											</div>
 											<div class="el-accoun-auth-right">
 												<h5>手机认证</h5>
-												
-												<p>
-													未认证
-													<a href="javascript:;" id="showBindPhoneModal">立刻绑定</a>
-												</p>
-																							
+											<#if userinfo.hasBindPhone>
+                                                <p>
+                                                    已认证
+                                                    <a href="javascript:;">查看</a>
+                                                </p>
+											<#else>
+                                                <p>
+                                                    未认证
+                                                    <a href="javascript:;" id="showBindPhoneModal">立刻绑定</a>
+                                                </p>
+											</#if>
 											</div>
 											<div class="clearfix"></div>
 											<p class="info">可以收到系统操作信息,并增加使用安全性</p>
@@ -146,8 +195,39 @@
 					</div>
 				</div>
 			</div>
-		</div>		
-		
+		</div>
+        <div class="modal fade" id="bindPhoneModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">绑定手机</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="bindPhoneForm" method="post" action="/bindPhone">
+                            <div class="form-group">
+                                <label for="phoneNumber" class="col-sm-2 control-label">手机号:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" />
+                                    <button id="sendVerifyCode" class="btn btn-primary" type="button" autocomplate="off">发送验证码</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="verifyCode" class="col-sm-2 control-label">验证码:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="verifyCode" name="verifyCode" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="bindPhone">保存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 		<#include "common/footer-tpl.ftl" />
 	</body>
 </html>

@@ -9,4 +9,11 @@ public interface IUserinfoService {
     int save(Userinfo userinfo);
     int update(Userinfo userinfo);
     Userinfo get(Long id);
+
+    /**
+     * 手机绑定
+     * @param phoneNumber
+     * @param verifyCode
+     */
+    void bindPhone(String phoneNumber, String verifyCode);
 }
