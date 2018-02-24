@@ -1,6 +1,8 @@
 package cn.wolfcode.p2p.base.service;
 
 import cn.wolfcode.p2p.base.domain.RealAuth;
+import cn.wolfcode.p2p.base.qo.RealAuthQueryObject;
+import cn.wolfcode.p2p.base.util.PageResult;
 
 import java.util.List;
 
@@ -14,8 +16,18 @@ public interface IRealAuthService {
     List<RealAuth> list();
 
     /**
-     * 市民认证申请
+     * 实名认证申请
      * @param realAuth
      */
     void realAuthSave(RealAuth realAuth);
+
+    PageResult query(RealAuthQueryObject qo);
+
+    /**
+     * 实名认证审核方法
+     * @param id
+     * @param state
+     * @param remark
+     */
+    void audit(Long id, int state, String remark);
 }

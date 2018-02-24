@@ -1,8 +1,10 @@
 package cn.wolfcode.p2p.base.domain;
 
 import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
@@ -11,11 +13,13 @@ import java.util.Map;
 /**
  * Created by 123 on 2018/2/23.
  */
-@Getter@Setter
+@Getter@Setter@ToString
 public class RealAuth extends BaseAuthDomain{
     public static final int SEX_MALE = 0;//性别男
     public static final int SEX_FEMALE = 1;//性别女
 
+    //private Logininfo auditor;//审核人
+    //private Logininfo applier;//申请人
     private String realName;//真实姓名
     private int sex;//性别
     private String idNumber;//身份证
@@ -23,7 +27,7 @@ public class RealAuth extends BaseAuthDomain{
     private String address;//身份证地址
     private String image1;//身份证正面
     private String image2;//身份证反面
-    public String getSexDisplay(){
+    /*public String getSexDisplay(){
         return this.sex==SEX_MALE?"男":"女";
     }
     public String getJsonString(){
@@ -39,7 +43,7 @@ public class RealAuth extends BaseAuthDomain{
         params.put("remark",remark);
         params.put("username",applier.getUsername());
         return JSON.toJSONString(params);
-    }
+    }*/
 
     /**
      * 获取用户真实名字的隐藏字符串，只显示姓氏

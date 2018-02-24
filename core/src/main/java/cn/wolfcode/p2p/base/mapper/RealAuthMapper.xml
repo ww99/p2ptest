@@ -14,13 +14,13 @@
     <result column="remark" property="remark" />
     <result column="auditTime" property="auditTime" />
     <result column="applyTime" property="applyTime" />
-    <association property="auditor" javaType="cn.wolfcode.p2p.base.domain.Logininfo" columnPrefix="au">
-      <id column="id" property="id"/>
-      <result property="username" column="username"/>
+    <association property="auditor" javaType="cn.wolfcode.p2p.base.domain.Logininfo" columnPrefix="au_">
+      <id column="id" property="id"></id>
+      <result property="username" column="username"></result>
     </association>
-    <association property="applier" javaType="cn.wolfcode.p2p.base.domain.Logininfo" columnPrefix="ap">
-      <id column="id" property="id"/>
-      <result property="username" column="username"/>
+    <association property="applier" javaType="cn.wolfcode.p2p.base.domain.Logininfo" columnPrefix="ap_">
+      <id column="id" property="id"></id>
+      <result property="username" column="username"></result>
     </association>
   </resultMap>
   <insert id="insert" parameterType="cn.wolfcode.p2p.base.domain.RealAuth" useGeneratedKeys="true" keyProperty="id" >
@@ -52,11 +52,25 @@
     ap.id ap_id,ap.username ap_username,au.id au_id,au.username au_username
     from `RealAuth` ra join logininfo ap on ra.applier_id = ap.id
     left join logininfo au on ra.auditor_id = au.id
-    where id = #{id}
+    where ra.id = #{id}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, realName, sex, birthDate, idNumber, address, state, image1, image2, remark, 
     auditTime, applyTime, auditor_id, applier_id
     from `RealAuth`
   </select>
+  <select id="queryForCount" resultType="long">
+    select count(ra.id) from realAuth ra join logininfo ap on ra.applier_id = ap.id
+    left join logininfo au on ra.auditor_id = au.id
+  </select>
+  <select id="queryForList" resultMap="BaseResultMap">
+    select ra.id, ra.realName, ra.sex, ra.birthDate, ra.idNumber, ra.address, ra.state, ra.image1, ra.image2, ra.remark,
+    ra.auditTime, ra.applyTime,ra.auditor_id, ra.applier_id,
+    ap.id ap_id,ap.username ap_username,au.id au_id,au.username au_username
+    from `RealAuth` ra join logininfo ap on ra.applier_id = ap.id
+    left join logininfo au on ra.auditor_id = au.id
+  </select>
+  <sql id="base_where">
+    <where></where>
+  </sql>
 </mapper>

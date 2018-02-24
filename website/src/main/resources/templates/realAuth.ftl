@@ -154,7 +154,7 @@
 						        <div class="form-group">
 						        	<label class="col-sm-4  control-label" for="bornDate">出生日期</label>
 					        		<div class="col-sm-8">
-						        		<input id="birthDate"  class="form-control" name="bornDate" type="text">
+						        		<input id="birthDate"  class="form-control" name="birthDate" type="text">
 						        	</div>
 						        </div>
 						        <div class="form-group">
