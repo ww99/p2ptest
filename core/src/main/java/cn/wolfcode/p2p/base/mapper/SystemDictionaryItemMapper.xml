@@ -3,17 +3,21 @@
 <mapper namespace="cn.wolfcode.p2p.base.mapper.SystemDictionaryItemMapper" >
   <resultMap id="BaseResultMap" type="cn.wolfcode.p2p.base.domain.SystemDictionaryItem" >
     <id column="id" property="id" />
-    <result column="parentId" property="parentid" />
     <result column="title" property="title" />
-    <result column="sequence" property="sequence" />
+    <result column="sequence" property="sequence"/>
+    <association property="parent" javaType="cn.wolfcode.p2p.base.domain.SystemDictionary">
+      <id property="id" column="id"></id>
+      <result column="title" property="title"/>
+      <result property="sn" column="sn"/>
+    </association>
   </resultMap>
   <insert id="insert" parameterType="cn.wolfcode.p2p.base.domain.SystemDictionaryItem" useGeneratedKeys="true" keyProperty="id" >
     insert into `SystemDictionaryItem` (parentId, title, sequence)
-    values (#{parentid}, #{title}, #{sequence})
+    values (#{parent.id}, #{title}, #{sequence})
   </insert>
   <update id="updateByPrimaryKey" parameterType="cn.wolfcode.p2p.base.domain.SystemDictionaryItem" >
     update `SystemDictionaryItem`
-    set parentId = #{parentid},
+    set parentId = #{parent.id},
       title = #{title},
       sequence = #{sequence}
     where id = #{id}
@@ -26,5 +30,28 @@
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, parentId, title, sequence
     from `SystemDictionaryItem`
+  </select>
+  <select id="queryForCount" resultType="long">
+    select count(id) from SystemDictionaryItem
+  </select>
+  <select id="queryForList" resultMap="BaseResultMap">
+  select id, parentId, title, sequence from SystemDictionaryItem
+  <include refid="base_where"/>
+  </select>
+  <select id="selectParent" resultMap="BaseResultMap">
+  select sd.id,sd.title ,sd.sn
+  from SystemDictionaryItem item
+  join systemDictionary sd on item.parentId = sd.id
+  </select>
+  <sql id="base_where">
+    <where>
+      <if test="parentId != null">
+      and parentId = #{parentId}
+      </if>
+    </where>
+  </sql>
+  <select id="queryListByParentSn" resultMap="BaseResultMap">
+  select id, parentId, title, sequence from SystemDictionaryItem where parentId =
+    (select id from SystemDictionary where sn = #{sn})
   </select>
 </mapper>

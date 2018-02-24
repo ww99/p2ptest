@@ -9,6 +9,7 @@
     <result column="idNumber" property="idNumber" />
     <result column="phoneNumber" property="phoneNumber" />
     <result column="email" property="email" />
+    <result column="realAuthId" property="realAuthId"/>
     <association property="incomeGrade" column="incomeGrade_id" javaType="cn.wolfcode.p2p.base.domain.SystemDictionaryItem"
                  select="cn.wolfcode.p2p.base.mapper.SystemDictionaryItemMapper.selectByPrimaryKey">
     </association>
@@ -26,10 +27,10 @@
     </association>
   </resultMap>
   <insert id="insert" parameterType="cn.wolfcode.p2p.base.domain.Userinfo" useGeneratedKeys="true" keyProperty="id" >
-    insert into `Userinfo` (id,version, bitState, realName, idNumber, phoneNumber, email,
+    insert into `Userinfo` (id,version, bitState, realName, idNumber, phoneNumber, email,realAuthId,
       incomeGrade_id, marriage_id, kidCount_id, educationBackground_id, houseCondition_id
       )
-    values (#{id},#{version}, #{bitState}, #{realName}, #{idNumber}, #{phoneNumber}, #{email},
+    values (#{id},#{version}, #{bitState}, #{realName}, #{idNumber}, #{phoneNumber}, #{email},#{realAuthId},
       #{incomeGrade.id}, #{marriage.id}, #{kidCount.id}, #{educationBackground.id}, #{houseCondition.id}
       )
   </insert>
@@ -41,6 +42,7 @@
       idNumber = #{idNumber},
       phoneNumber = #{phoneNumber},
       email = #{email},
+      realAuthId = #{realAuthId},
       incomeGrade_id = #{incomeGrade.id},
       marriage_id = #{marriage.id},
       kidCount_id = #{kidCount.id},
@@ -49,7 +51,7 @@
     where id = #{id}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, version, bitState, realName, idNumber, phoneNumber, email, incomeGrade_id, 
+    select id, version, bitState, realName, idNumber, phoneNumber, email, incomeGrade_id, realAuthId,
     marriage_id, kidCount_id, educationBackground_id, houseCondition_id
     from `Userinfo`
     where id = #{id}

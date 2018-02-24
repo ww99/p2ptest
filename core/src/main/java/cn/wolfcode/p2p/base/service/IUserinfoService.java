@@ -16,4 +16,17 @@ public interface IUserinfoService {
      * @param verifyCode
      */
     void bindPhone(String phoneNumber, String verifyCode);
+
+    /**
+     * 邮箱绑定
+     * @param key
+     */
+    void bindEmail(String key);
+
+    /**
+     * 保存基本信息
+     * @param userinfo
+     */
+    void basicInfoSave(Userinfo userinfo);
+
 }

@@ -1,7 +1,7 @@
 package cn.wolfcode.p2p;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+        import org.springframework.boot.SpringApplication;
+        import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Created by 123 on 2018/2/14.

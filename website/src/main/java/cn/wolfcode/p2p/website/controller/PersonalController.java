@@ -44,4 +44,18 @@ public class PersonalController {
         }
         return result;
     }
+
+    @RequestMapping("bindEmail")
+    public String bindEmail(String key,Model model){
+        try {
+            System.out.println(key);
+            userinfoService.bindEmail(key);
+            model.addAttribute("success",true);
+        }catch (Exception e){
+            e.printStackTrace();
+            model.addAttribute("success",false);
+            model.addAttribute("msg",e.getMessage());
+        }
+        return "checkmail_result";
+    }
 }

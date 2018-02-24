@@ -1,12 +1,16 @@
 package cn.wolfcode.p2p.base.service.impl;
 
+import cn.wolfcode.p2p.base.domain.SystemDictionary;
 import cn.wolfcode.p2p.base.domain.SystemDictionaryItem;
 import cn.wolfcode.p2p.base.mapper.SystemDictionaryItemMapper;
+import cn.wolfcode.p2p.base.qo.SystemDictionaryItemQueryObject;
 import cn.wolfcode.p2p.base.service.ISystemDictionaryItemService;
+import cn.wolfcode.p2p.base.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,5 +38,25 @@ public class SystemDictionaryItemServiceImpl implements ISystemDictionaryItemSer
     @Override
     public List<SystemDictionaryItem> list() {
         return systemDictionaryItemMapper.selectAll();
+    }
+
+    @Override
+    public PageResult query(SystemDictionaryItemQueryObject qo) {
+        Long total = systemDictionaryItemMapper.queryForCount();
+        if (total == 0){
+            return new PageResult(total, Collections.EMPTY_LIST);
+        }
+        return new PageResult(total,systemDictionaryItemMapper.queryForList(qo));
+    }
+
+    @Override
+    public List<SystemDictionary> selectParent() {
+        List<SystemDictionary> systemDictionaries = systemDictionaryItemMapper.selectParent();
+        return systemDictionaries;
+    }
+
+    @Override
+    public List<SystemDictionaryItem> queryListByParentSn(String sn) {
+        return systemDictionaryItemMapper.queryListByParentSn(sn);
     }
 }

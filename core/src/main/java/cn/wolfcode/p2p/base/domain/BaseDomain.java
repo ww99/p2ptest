@@ -10,5 +10,5 @@ import java.io.Serializable;
  */
 @Getter@Setter
 public class BaseDomain implements Serializable{
-    private Long id;
+    protected Long id;
 }
